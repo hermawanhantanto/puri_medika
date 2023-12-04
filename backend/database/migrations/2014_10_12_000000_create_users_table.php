@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('nomor_identitas');
+            $table->string('nomor_identitas')->unique();
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('nomor_telepon');
             $table->string('alamat');
+            $table->string('image')->nullable();
+            $table->enum('role', ['ADMIN', 'USER']);
             $table->timestamps();
         });
     }

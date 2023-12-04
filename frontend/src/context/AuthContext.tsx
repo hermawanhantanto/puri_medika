@@ -8,6 +8,7 @@ import React, {
 interface IUser {
   email: string;
   token: string;
+  role: string;
 }
 
 interface IContextType {

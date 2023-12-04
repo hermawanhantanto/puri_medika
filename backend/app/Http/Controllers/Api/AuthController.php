@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -20,11 +21,11 @@ class AuthController extends Controller
             'nama' => 'required|min:3|max:50',
             'email' => 'required|email:rfc,dns|unique:users',
             'password' => 'required|min:8|max:50',
-            'nomor_identitas' => 'required|digits_between:12,16',
+            'nomor_identitas' => 'required|digits_between:16,16|unique:users',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
             'nomor_telepon' => 'required|digits_between:10,13',
-            'alamat' => 'required|min:10|max:100',
+            'alamat' => 'required|min:10|max:255',
         ]);
 
         if($validate->fails()){
@@ -35,8 +36,11 @@ class AuthController extends Controller
         }
 
         $regisData['password'] = bcrypt($request->password);
+        $regisData['role'] = 'USER';
 
         $user = User::create($regisData);
+        $user->sendEmailVerificationNotification();
+
 
         return response()->json([
             'message' => 'Register Success!',
@@ -73,7 +77,9 @@ class AuthController extends Controller
 
         return response()->json([
             'email' => $user['email'],
-            'token' => $token
+            'email_verified_at' => $user['email_verified_at'],
+            'token' => $token,
+            'role' => $user['role']
         ],200);
     }
 }

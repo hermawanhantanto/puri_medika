@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -20,12 +20,15 @@ class User extends Authenticatable
     protected $fillable = [
         'nama',
         'email',
+        'email_verified_at',
         'password',
         'nomor_identitas',
         'tanggal_lahir',
         'jenis_kelamin',
         'nomor_telepon',
         'alamat',
+        'image',
+        'role',
     ];
 
     /**

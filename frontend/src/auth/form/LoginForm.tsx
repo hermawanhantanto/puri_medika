@@ -36,32 +36,30 @@ const LoginForm = () => {
     try {
       const { email, password } = values;
       const user = await signIn({ email, password });
-      if (!user.token) {
+
+      if (!user.email_verified_at)
         return toast({
           variant: "destructive",
-          title: "Error",
-          description: "Username atau password salah",
+          title: "Email belum terverifikasi",
           action: <ToastAction altText="Try again">Coba lagi</ToastAction>,
         });
-      }
 
       const userData = {
         email: user.email,
         token: user.token,
+        role: user.role,
       };
 
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
 
       toast({
-        title: "Success",
-        description: "Login berhasil",
+        title: "Success! berhasil login",
       });
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "Username atau password salah",
+        title: "Username atau password salah",
         action: <ToastAction altText="Try again">Coba lagi</ToastAction>,
       });
     }
