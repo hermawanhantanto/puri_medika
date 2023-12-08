@@ -12,17 +12,39 @@ class PasienController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $pasien = User::all();
+        
+        
+        $perPage = $request->input('perPage', 10);
+        $orderBy = $request->input('orderBy', 'created_at');
+        $filter = $request->input('jenis_kelamin');
+
+        $allowedSort = ['created_at', 'nama', 'email', 'nomor_identitas', 'tanggal_lahir', 'jenis_kelamin', 'nomor_telepon', 'alamat'];
+
+        if(!in_array($orderBy, $allowedSort)){
+            $orderBy = 'created_at';
+        }
+
+        $query = User::orderBy($orderBy);
+
+        if($filter){
+            $query->where('jenis_kelamin', $filter);
+        }
+        
+        $count = $query->count();
+
+        $pasien = $query->paginate($perPage);
+        
         return response()->json([
             'message' => 'Berhasil menampilkan data pasien',
-            'data' => $pasien
+            'data' => $pasien,
+            'total' => $count
         ], 200);
-
     }
-    
+
+  
     /**
      * Display the specified resource.
      */
@@ -61,7 +83,7 @@ class PasienController extends Controller
             'nama' => 'required|min:3|max:50',
             'password' => 'required|min:8|max:50',
             'email' => 'required|email:rfc,dns|unique:users,email,'.$pasien->id.',id',
-            'nomor_identitas' => 'required|digits_between:16,20|unique:users,nomor_identitas,'.$pasien->id.',id',
+            'nomor_identitas' => 'required|digits_between:16,16|unique:users,nomor_identitas,'.$pasien->id.',id',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
             'nomor_telepon' => 'required|digits_between:10,13',
@@ -106,4 +128,6 @@ class PasienController extends Controller
             'data' => $pasien
         ],200);
     }
+
+    
 }

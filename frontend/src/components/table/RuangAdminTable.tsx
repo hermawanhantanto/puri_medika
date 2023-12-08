@@ -1,5 +1,13 @@
+import { tableHeaderRuang } from "@/constant";
 import { useAuth } from "@/hooks/useAuth";
-import { useGetAllPasien } from "@/lib/react-query/queriesAndMutation";
+import { useGetAllRuang } from "@/lib/react-query/queriesAndMutation";
+import { IRuang } from "@/types";
+import { useEffect } from "react";
+import { FaArrowUp } from "react-icons/fa6";
+import { Link, useLocation } from "react-router-dom";
+import NotFound from "../shared/NotFound";
+import Pagination from "../shared/Pagination";
+import SkeletonTable from "../shared/SkeletonTable";
 import {
   Table,
   TableBody,
@@ -9,42 +17,35 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { tableHeaderPasien } from "@/constant";
-import { IPasien } from "@/types";
-import SkeletonTable from "../shared/SkeletonTable";
-import { Link, useLocation } from "react-router-dom";
-import NotFound from "../shared/NotFound";
-import { useEffect } from "react";
-import { FaArrowUp } from "react-icons/fa6";
-import Pagination from "../shared/Pagination";
+import { Badge } from "../ui/badge";
 
-const PasienAdminTable = () => {
+const RuangAdminTable = () => {
   const { user } = useAuth();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
   const {
-    data: pasiens,
+    data: ruangs,
     isFetching,
     refetch,
-  } = useGetAllPasien({
+  } = useGetAllRuang({
     token: user!.token,
     orderBy: params.get("orderBy") || "",
-    jenis_kelamin: params.get("jenis_kelamin") || "",
+    status: params.get("status") || "",
     page: params.get("page") || "",
   });
 
-  const item = pasiens?.total || 0;
+  const item = ruangs?.total || 0;
 
   useEffect(() => {
     refetch();
-  }, [params.get("jenis_kelamin"), params.get("page"), params.get("orderBy")]);
+  }, [params.get("status"), params.get("page"), params.get("orderBy")]);
 
   const handleOrderBy = (key: string) => {
     params.delete("orderBy");
     params.set("orderBy", key);
     const query = params.size ? "?" + params.toString() : "";
-    return `/admin/pasien${query}`;
+    return `/admin/ruang${query}`;
   };
 
   const active = params.get("orderBy");
@@ -52,15 +53,15 @@ const PasienAdminTable = () => {
 
   const content = () => {
     if (isFetching) return <SkeletonTable />;
-    else if (pasiens?.data?.data.length === 0) return <NotFound />;
+    else if (ruangs?.data?.data.length === 0) return <NotFound />;
     else {
       return (
         <>
           <Table className="min-w-full">
-            <TableCaption>Pasiens</TableCaption>
+            <TableCaption>Ruangs</TableCaption>
             <TableHeader>
               <TableRow>
-                {tableHeaderPasien.map((item) => {
+                {tableHeaderRuang.map((item) => {
                   return (
                     <TableHead key={item.key}>
                       <Link
@@ -76,19 +77,22 @@ const PasienAdminTable = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {pasiens?.data?.data.map((pasien: IPasien) => (
-                <TableRow key={pasien.id}>
+              {ruangs?.data?.data.map((ruang: IRuang) => (
+                <TableRow key={ruang.id}>
                   <TableCell>
-                    <Link to={`/admin/pasien/edit/${pasien.id}`}>
-                      {pasien.nama}
+                    <Link to={`/admin/ruang/edit/${ruang.id}`}>
+                      {ruang.nama}
                     </Link>
                   </TableCell>
-                  <TableCell>{pasien.email}</TableCell>
-                  <TableCell>{pasien.nomor_identitas}</TableCell>
-                  <TableCell>{String(pasien.tanggal_lahir)}</TableCell>
-                  <TableCell>{pasien.alamat}</TableCell>
-                  <TableCell>{pasien.jenis_kelamin}</TableCell>
-                  <TableCell>{pasien.nomor_telepon}</TableCell>
+                  <TableCell>{ruang.keterangan}</TableCell>
+                  <TableCell>
+                    {ruang.status === "tersedia" ? (
+                      <Badge>{ruang.status}</Badge>
+                    ) : (
+                      <Badge variant="destructive">{ruang.status}</Badge>
+                    )}
+                  </TableCell>
+                  <TableCell>{ruang.kapasitas} Orang</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -103,4 +107,4 @@ const PasienAdminTable = () => {
   return content();
 };
 
-export default PasienAdminTable;
+export default RuangAdminTable;

@@ -1,15 +1,24 @@
 import axios from "axios";
 import { API_URL } from "./authAction";
-import { deletePasienParams, editPasienParams, showPasienParams } from "@/types";
+import {
+  GetAllPasienParams,
+  deletePasienParams,
+  editPasienParams,
+  showPasienParams,
+} from "@/types";
 
-export async function getAllPasien(token: string) {
+export async function getAllPasien(params: GetAllPasienParams) {
   try {
-    const response = await axios.get(`${API_URL}/pasiens`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { token, page = 1, orderBy, jenis_kelamin } = params;
+    const response = await axios.get(
+      `${API_URL}/pasiens?page=${page}&orderBy=${orderBy}&jenis_kelamin=${jenis_kelamin}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(error);

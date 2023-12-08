@@ -1,5 +1,13 @@
+import { tableHeaderRekamMedis } from "@/constant";
 import { useAuth } from "@/hooks/useAuth";
-import { useGetAllPasien } from "@/lib/react-query/queriesAndMutation";
+import { useGetAllRekamMedis } from "@/lib/react-query/queriesAndMutation";
+import { IRekamMedis } from "@/types";
+import { useEffect } from "react";
+import { FaArrowUp } from "react-icons/fa6";
+import { Link, useLocation } from "react-router-dom";
+import NotFound from "../shared/NotFound";
+import Pagination from "../shared/Pagination";
+import SkeletonTable from "../shared/SkeletonTable";
 import {
   Table,
   TableBody,
@@ -9,32 +17,24 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { tableHeaderPasien } from "@/constant";
-import { IPasien } from "@/types";
-import SkeletonTable from "../shared/SkeletonTable";
-import { Link, useLocation } from "react-router-dom";
-import NotFound from "../shared/NotFound";
-import { useEffect } from "react";
-import { FaArrowUp } from "react-icons/fa6";
-import Pagination from "../shared/Pagination";
 
-const PasienAdminTable = () => {
+const RekamMedisTable = () => {
   const { user } = useAuth();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
   const {
-    data: pasiens,
+    data: rekammedis,
     isFetching,
     refetch,
-  } = useGetAllPasien({
+  } = useGetAllRekamMedis({
     token: user!.token,
     orderBy: params.get("orderBy") || "",
     jenis_kelamin: params.get("jenis_kelamin") || "",
     page: params.get("page") || "",
   });
 
-  const item = pasiens?.total || 0;
+  const item = rekammedis?.total || 0;
 
   useEffect(() => {
     refetch();
@@ -44,7 +44,7 @@ const PasienAdminTable = () => {
     params.delete("orderBy");
     params.set("orderBy", key);
     const query = params.size ? "?" + params.toString() : "";
-    return `/admin/pasien${query}`;
+    return `/admin/rekammedis${query}`;
   };
 
   const active = params.get("orderBy");
@@ -52,15 +52,15 @@ const PasienAdminTable = () => {
 
   const content = () => {
     if (isFetching) return <SkeletonTable />;
-    else if (pasiens?.data?.data.length === 0) return <NotFound />;
+    else if (rekammedis?.data?.data.length === 0) return <NotFound />;
     else {
       return (
         <>
           <Table className="min-w-full">
-            <TableCaption>Pasiens</TableCaption>
+            <TableCaption>Rekam Medis</TableCaption>
             <TableHeader>
               <TableRow>
-                {tableHeaderPasien.map((item) => {
+                {tableHeaderRekamMedis.map((item) => {
                   return (
                     <TableHead key={item.key}>
                       <Link
@@ -76,19 +76,19 @@ const PasienAdminTable = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {pasiens?.data?.data.map((pasien: IPasien) => (
-                <TableRow key={pasien.id}>
+              {rekammedis?.data?.data.map((rekammedis: IRekamMedis) => (
+                <TableRow key={rekammedis.id}>
                   <TableCell>
-                    <Link to={`/admin/pasien/edit/${pasien.id}`}>
-                      {pasien.nama}
+                    <Link to={`/admin/rekammedis/edit/${rekammedis.id}`}>
+                      {rekammedis.nama_pasien}
                     </Link>
                   </TableCell>
-                  <TableCell>{pasien.email}</TableCell>
-                  <TableCell>{pasien.nomor_identitas}</TableCell>
-                  <TableCell>{String(pasien.tanggal_lahir)}</TableCell>
-                  <TableCell>{pasien.alamat}</TableCell>
-                  <TableCell>{pasien.jenis_kelamin}</TableCell>
-                  <TableCell>{pasien.nomor_telepon}</TableCell>
+                  <TableCell>{rekammedis.nomor_identitas}</TableCell>
+                  <TableCell>{rekammedis.keluhan}</TableCell>
+                  <TableCell>{rekammedis.diagnosa}</TableCell>
+                  <TableCell>{rekammedis.tindakan}</TableCell>
+                  <TableCell>{rekammedis.keterangan}</TableCell>
+                  <TableCell>{rekammedis.jenis_kelamin}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -103,4 +103,4 @@ const PasienAdminTable = () => {
   return content();
 };
 
-export default PasienAdminTable;
+export default RekamMedisTable;

@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DokterController;
 use App\Http\Controllers\Api\PasienController;
+use App\Http\Controllers\Api\PendaftaranController;
+use App\Http\Controllers\Api\RekamMedisController;
+use App\Http\Controllers\Api\RuangController;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,5 +48,31 @@ Route::middleware('auth:api')->group(function(){
     Route::put('/pasiens/{id}', [PasienController::class, 'update']);
     Route::delete('/pasiens/{id}', [PasienController::class, 'destroy']);
 
-    
+    //Route for admin dokter page
+    Route::get('/dokters', [DokterController::class, 'index']);
+    Route::get('/dokters/{id}', [DokterController::class, 'show']);
+    Route::post('/dokters', [DokterController::class, 'store']);
+    Route::put('/dokters/{id}', [DokterController::class, 'update']);
+    Route::delete('/dokters/{id}', [DokterController::class, 'destroy']);
+
+    //Route for admin ruang page
+    Route::get('/ruangs', [RuangController::class, 'index']);
+    Route::get('/ruangs/{id}', [RuangController::class, 'show']);
+    Route::post('/ruangs', [RuangController::class, 'store']);
+    Route::put('/ruangs/{id}', [RuangController::class, 'update']);
+    Route::delete('/ruangs/{id}', [RuangController::class, 'destroy']);
+
+    //Route for admin pendaftarans page
+    Route::get('/pendaftarans', [PendaftaranController::class, 'index']);
+    Route::get('/pendaftarans/{id}', [PendaftaranController::class, 'show']);
+    Route::post('/pendaftarans', [PendaftaranController::class, 'store']);
+    Route::put('/pendaftarans/{id}', [PendaftaranController::class, 'update']);
+    Route::delete('/pendaftarans/{id}', [PendaftaranController::class, 'destroy']);
+
+    //Route for admin rekammedis page
+    Route::get('/rekammedis', [RekamMedisController::class, 'index']);
+    Route::get('/rekammedis/{id}', [RekamMedisController::class, 'show']);
+    Route::post('/rekammedis', [RekamMedisController::class, 'store']);
+    Route::put('/rekammedis/{id}', [RekamMedisController::class, 'update']);
+    Route::delete('/rekammedis/{id}', [RekamMedisController::class, 'destroy']);
 });

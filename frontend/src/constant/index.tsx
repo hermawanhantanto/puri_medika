@@ -33,7 +33,7 @@ export const sideBarLinks = [
   },
   {
     name: "Rekam Medis",
-    path: "/admin/rekam-medis",
+    path: "/admin/rekammedis",
     icon: <FaHospitalUser />,
   },
 ];
@@ -46,4 +46,39 @@ export const tableHeaderPasien = [
   { label: "Alamat", key: "alamat" },
   { label: "Jenis Kelamin", key: "jenis_kelamin" },
   { label: "Nomor Telepon", key: "nomor_telepon" },
+];
+
+export const tableHeaderDokter = [
+  { label: "Nama", key: "nama" },
+  { label: "Spesialis", key: "spesialis" },
+  { label: "Nomor Izin Praktek", key: "nomor_izin_praktek" },
+  { label: "Alamat", key: "alamat" },
+  { label: "Jenis Kelamin", key: "jenis_kelamin" },
+  { label: "Nomor Telepon", key: "no_telp" },
+];
+
+export const tableHeaderRuang = [
+  { label: "Nama", key: "nama" },
+  { label: "Keterangan", key: "keterangan" },
+  { label: "Status", key: "status" },
+  { label: "Kapasitas", key: "kapasitas" },
+];
+
+export const tableHeaderPendaftaran = [
+  { label: "Nama Pasien", key: "nama_pasien" },
+  { label: "Nama Dokter", key: "nama_dokter" },
+  { label: "Nama Ruang", key: "nama_ruang" },
+  { label: "Nomor Identitas", key: "nomor_identitas" },
+  { label: "Status", key: "status" },
+  { label: "Tanggal Pendaftaran", key: "tanggal_pendaftaran" },
+];
+
+export const tableHeaderRekamMedis = [
+  { label: "Nama Pasien", key: "nama_pasien" },
+  { label: "Nomor Identitas", key: "nomor_identitas" },
+  { label: "Keluhan", key: "keluhan" },
+  { label: "Diagnosa", key: "diagnosa" },
+  { label: "Tindakan", key: "tindakan" },
+  { label: "Keterangan", key: "keterangan" },
+  { label: "Jenis Kelamin", key: "jenis_kelamin" },
 ];
