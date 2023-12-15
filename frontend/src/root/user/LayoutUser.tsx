@@ -9,8 +9,8 @@ const LayoutUser = () => {
       <div className="flex flex-col sm:px-12 sm:py-8 py-12 px-5">
         <MobileUserNav />
         <Navbar />
-        <Outlet />
       </div>
+      <Outlet />
       <Footer />
     </main>
   );

@@ -5,7 +5,7 @@ import { FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="flex items-center justify-between bg-blue-600 sm:p-12 p-5">
+    <footer className="flex items-center justify-between bg-[#2F5B79] sm:p-12 p-5">
       <img
         src={logo}
         alt="logo"
