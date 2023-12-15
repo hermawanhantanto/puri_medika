@@ -83,6 +83,10 @@ const RegisterForm = () => {
         title: "Success",
         description: "Silahkan verifikasi email anda",
       });
+      const backToLogin = setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+      return backToLogin;
     } catch (error) {
       toast({
         variant: "destructive",

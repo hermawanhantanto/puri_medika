@@ -122,10 +122,7 @@ function App() {
           />
         </Route>
         <Route element={<LayoutUser />}>
-          <Route
-            path="/"
-            element={isUser ? <Dashboard /> : <Navigate to="/login" />}
-          />
+          <Route path="/" element={isUser && <Dashboard />} />
           <Route
             path="/pendaftaran"
             element={isUser ? <PendaftaranPasien /> : <Navigate to="login" />}

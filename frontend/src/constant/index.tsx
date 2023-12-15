@@ -82,3 +82,11 @@ export const tableHeaderRekamMedis = [
   { label: "Keterangan", key: "keterangan" },
   { label: "Jenis Kelamin", key: "jenis_kelamin" },
 ];
+
+// user
+export const navbar = [
+  { label: "Beranda", path: "/" },
+  { label: "Pendaftaran", path: "/pendaftaran" },
+  { label: "Dokter", path: "/dokter" },
+  { label: "Ruang", path: "/ruang" },
+];
