@@ -1,13 +1,17 @@
+import Footer from "@/components/shared/Footer";
+import MobileUserNav from "@/components/shared/MobileUserNav";
 import Navbar from "@/components/shared/Navbar";
-import React from "react";
 import { Outlet } from "react-router-dom";
 
 const LayoutUser = () => {
   return (
-    <main className="w-full flex-col flex px-12 py-8">
-      <Navbar />
-      <Outlet />
-      Footer
+    <main className="w-full flex-col flex">
+      <div className="flex flex-col sm:px-12 sm:py-8 py-12 px-5">
+        <MobileUserNav />
+        <Navbar />
+        <Outlet />
+      </div>
+      <Footer />
     </main>
   );
 };

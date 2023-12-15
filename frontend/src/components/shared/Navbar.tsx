@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center">
+    <nav className="flex justify-between items-center left-20 right-20 sticky z-5 max-lg:hidden">
       <img src={logo} alt="logo" width={180} height={80} />
       <ul className="flex items-center gap-6">
         {navbar.map((item) => (
