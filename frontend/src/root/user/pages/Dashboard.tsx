@@ -43,29 +43,41 @@ const Dashboard = () => {
           <div className="flex justify-center gap-8 mt-[47px] max-lg:flex-col">
             <div className="flex flex-col justify-center items-center">
               <p className="text-xl font-bold mb-4">Poli Jantung</p>
-              <img src="assets/images/service-1.png" alt="service-1" />
+              <img
+                src="assets/images/service-1.png"
+                alt="service-1"
+                className="transition duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
+              />
               <img
                 src="assets/icons/service-1.png"
-                className="sm:mt-[-3rem] mt-[-1.5rem] max-sm:w-12 w-20"
+                className="sm:mt-[-3rem] mt-[-1.5rem] max-sm:w-12 w-20 transition duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
                 alt="service-icons1"
               />
             </div>
             <div className="flex flex-col justify-center items-center">
               <p className="text-xl font-bold mb-4">Poli Gigi</p>
-              <img src="assets/images/service-2.png" alt="service-2" />
+              <img
+                src="assets/images/service-2.png"
+                alt="service-2"
+                className="transition duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
+              />
               <img
                 src="assets/icons/service-2.png"
-                className="sm:mt-[-3rem] mt-[-1.5rem] max-sm:w-12 w-20"
+                className="sm:mt-[-3rem] mt-[-1.5rem] max-sm:w-12 w-20 transition duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
                 alt="service-icons2"
               />
             </div>
             <div className="flex flex-col justify-center items-center">
               <p className="text-xl font-bold mb-4">Poli Mata</p>
 
-              <img src="assets/images/service-3.png" alt="service-3" />
+              <img
+                src="assets/images/service-3.png"
+                alt="service-3"
+                className="transition duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
+              />
               <img
                 src="assets/icons/service-3.png"
-                className="sm:mt-[-3rem] mt-[-1.5rem] max-sm:w-12 w-20"
+                className="sm:mt-[-3rem] mt-[-1.5rem] max-sm:w-12 w-20 transition duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-pointer"
                 alt="service-icons3"
               />
             </div>
