@@ -23,6 +23,7 @@ export interface IPasien {
   tanggal_lahir: Date;
   nomor_telepon: string;
   alamat: string;
+  image?: string;
 }
 
 export interface showPasienParams {
@@ -200,7 +201,7 @@ export interface CreateRekamMedisParams {
   keluhan: string;
   diagnosa: string;
   tindakan: string;
- 
+
   keterangan: string;
 }
 

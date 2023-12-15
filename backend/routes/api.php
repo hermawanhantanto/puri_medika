@@ -6,8 +6,7 @@ use App\Http\Controllers\Api\PasienController;
 use App\Http\Controllers\Api\PendaftaranController;
 use App\Http\Controllers\Api\RekamMedisController;
 use App\Http\Controllers\Api\RuangController;
-
-
+use App\Http\Controllers\Api\UtilityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -75,4 +74,13 @@ Route::middleware('auth:api')->group(function(){
     Route::post('/rekammedis', [RekamMedisController::class, 'store']);
     Route::put('/rekammedis/{id}', [RekamMedisController::class, 'update']);
     Route::delete('/rekammedis/{id}', [RekamMedisController::class, 'destroy']);
+
+
+    //Route for utility
+    Route::get('/countPasien', [UtilityController::class, 'getCountPasien']);
+    Route::get('/countDokter', [UtilityController::class, 'getCountDokter']);
+    Route::get('/countRuang', [UtilityController::class, 'getCountRuang']);
+    Route::get('/countPendaftaran', [UtilityController::class, 'getCountPendaftaran']);
+    Route::get('/countRekamMedis', [UtilityController::class, 'getCountRekamMedis']);
+    Route::get('/recentPasien', [UtilityController::class, 'getRecentPasien']);
 });

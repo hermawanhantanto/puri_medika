@@ -54,7 +54,21 @@ import {
   getAllPendaftaran,
   showPendaftaran,
 } from "../action/pendaftaranAdminAction";
-import { createRekamMedis, deleteRekamMedis, editRekamMedis, getAllRekamMedis, showRekamMedis } from "../action/rekamMedisAction";
+import {
+  createRekamMedis,
+  deleteRekamMedis,
+  editRekamMedis,
+  getAllRekamMedis,
+  showRekamMedis,
+} from "../action/rekamMedisAction";
+import {
+  getCountDokter,
+  getCountPasien,
+  getCountPendaftaran,
+  getCountRekamMedis,
+  getCountRuang,
+  getRecentPasien,
+} from "../action/utilityAction";
 
 export const useSignInMutation = () => {
   return useMutation({
@@ -68,7 +82,7 @@ export const useSignUpMutation = () => {
     mutationFn: (user: registerParams) => signUpAccount(user),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllPasien"],
+        queryKey: ["getAllPasien", "countPasien", "getRecentPasien"],
       });
     },
   });
@@ -107,7 +121,7 @@ export const useDeletePasienMutation = () => {
     mutationFn: (user: deletePasienParams) => deletePasien(user),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllPasien"],
+        queryKey: ["getAllPasien", "countPasien", "getRecentPasien"],
       });
     },
   });
@@ -126,7 +140,7 @@ export const useCreateDokterMutation = () => {
     mutationFn: (dokter: CreateDokterParams) => createDokter(dokter),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllDokter"],
+        queryKey: ["getAllDokter", "countDokter"],
       });
     },
   });
@@ -158,7 +172,7 @@ export const useDeleteDokterMutation = () => {
     mutationFn: (dokter: DeleteDokterParams) => deleteDokter(dokter),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllDokter"],
+        queryKey: ["getAllDokter", "countDokter"],
       });
     },
   });
@@ -177,7 +191,7 @@ export const useCreateRuangMutation = () => {
     mutationFn: (ruang: CreateRuangParams) => createRuang(ruang),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllRuang"],
+        queryKey: ["getAllRuang", "countRuang"],
       });
     },
   });
@@ -209,7 +223,7 @@ export const useDeleteRuangMutation = () => {
     mutationFn: (ruang: DeleteRuangParams) => deleteRuang(ruang),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllRuang"],
+        queryKey: ["getAllRuang", "countRuang"],
       });
     },
   });
@@ -224,14 +238,14 @@ export const useGetAllRekamMedis = (params: GetAllRekamMedisParams) => {
   });
 };
 
-export const useCreateRekamMedisMutation  = () => {
+export const useCreateRekamMedisMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (rekamMedis: CreateRekamMedisParams) =>
       createRekamMedis(rekamMedis),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllRekamMedis"],
+        queryKey: ["getAllRekamMedis", "countRekamMedis"],
       });
     },
   });
@@ -252,7 +266,7 @@ export const useEditRekamMedisMutation = () => {
       editRekamMedis(rekamMedis),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllRekamMedis"],
+        queryKey: ["getAllRekamMedis", "countRekamMedis"],
       });
     },
   });
@@ -265,12 +279,11 @@ export const useDeleteRekamMedisMutation = () => {
       deleteRekamMedis(rekamMedis),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllRekamMedis"],
+        queryKey: ["getAllRekamMedis", "countRekamMedis"],
       });
     },
   });
 };
-
 
 //-----------------------------------------------------------------------------
 export const useGetAllPendaftaran = (params: GetAllPendaftaranParams) => {
@@ -288,7 +301,7 @@ export const useCreatePendaftaranMutation = () => {
       createPendaftaran(pendaftaran),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllPendaftaran"],
+        queryKey: ["getAllPendaftaran", "countPendaftaran"],
       });
     },
   });
@@ -309,7 +322,7 @@ export const useEditPendaftaranMutation = () => {
       editPendaftaran(pendaftaran),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllPendaftaran"],
+        queryKey: ["getAllPendaftaran", "countPendaftaran"],
       });
     },
   });
@@ -322,8 +335,51 @@ export const useDeletePendaftaranMutation = () => {
       deletePendaftaran(pendaftaran),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getAllPendaftaran"],
+        queryKey: ["getAllPendaftaran", "countPendaftaran"],
       });
     },
+  });
+};
+
+//-----------------------------------------------------------------------------
+export const useCountPasien = (token: string) => {
+  return useQuery({
+    queryKey: ["countPasien"],
+    queryFn: () => getCountPasien(token),
+  });
+};
+
+export const useCountDokter = (token: string) => {
+  return useQuery({
+    queryKey: ["countDokter"],
+    queryFn: () => getCountDokter(token),
+  });
+};
+
+export const useCountRuang = (token: string) => {
+  return useQuery({
+    queryKey: ["countRuang"],
+    queryFn: () => getCountRuang(token),
+  });
+};
+
+export const useCountPendaftaran = (token: string) => {
+  return useQuery({
+    queryKey: ["countPendaftaran"],
+    queryFn: () => getCountPendaftaran(token),
+  });
+};
+
+export const useCountRekamMedis = (token: string) => {
+  return useQuery({
+    queryKey: ["countRekamMedis"],
+    queryFn: () => getCountRekamMedis(token),
+  });
+};
+
+export const useGetRecentPasien = (token: string) => {
+  return useQuery({
+    queryKey: ["getRecentPasien"],
+    queryFn: () => getRecentPasien(token),
   });
 };
