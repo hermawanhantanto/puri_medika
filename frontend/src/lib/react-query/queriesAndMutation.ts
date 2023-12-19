@@ -69,6 +69,10 @@ import {
   getCountRuang,
   getRecentPasien,
 } from "../action/utilityAction";
+import {
+  getPendaftaranByUser,
+  getRekamMedisByUser,
+} from "../action/profileAction";
 
 export const useSignInMutation = () => {
   return useMutation({
@@ -381,5 +385,39 @@ export const useGetRecentPasien = (token: string) => {
   return useQuery({
     queryKey: ["getRecentPasien"],
     queryFn: () => getRecentPasien(token),
+  });
+};
+
+export const useGetAllRekamMedisByUser = ({
+  token,
+  id,
+}: {
+  token: string;
+  id: string;
+}) => {
+  return useQuery({
+    queryKey: ["getAllRekamMedisByUser"],
+    queryFn: () =>
+      getRekamMedisByUser({
+        token,
+        id,
+      }),
+  });
+};
+
+export const useGetAllPendaftaranByUser = ({
+  token,
+  id,
+}: {
+  token: string;
+  id: string;
+}) => {
+  return useQuery({
+    queryKey: ["getAllPendaftaranByUser"],
+    queryFn: () =>
+      getPendaftaranByUser({
+        token,
+        id,
+      }),
   });
 };

@@ -1,16 +1,43 @@
 import ProfileForm from "@/components/form/ProfileForm";
 import Spinner from "@/components/shared/Spinner";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
-import { useShowPasien } from "@/lib/react-query/queriesAndMutation";
+import {
+  useGetAllPendaftaranByUser,
+  useGetAllRekamMedisByUser,
+  useShowPasien,
+} from "@/lib/react-query/queriesAndMutation";
+import { Badge } from "@/components/ui/badge";
 
 const Profile = () => {
   const { user } = useAuth();
-  const { data: pengguna, isFetching, refetch } = useShowPasien({
+
+  const {
+    data: pengguna,
+    isFetching,
+    refetch,
+  } = useShowPasien({
     token: user!.token,
     id: String(user!.id),
   });
 
+  const { data: pendaftarans } = useGetAllPendaftaranByUser({
+    token: user!.token,
+    id: String(user!.id),
+  });
+
+  const { data: rekammediss } = useGetAllRekamMedisByUser({
+    token: user!.token,
+    id: String(user!.id),
+  });
+
+  console.log("ini", rekammediss);
   return (
     <main className="flex max-w-[1440px] mx-auto min-h-screen flex-col">
       {isFetching ? (
@@ -51,16 +78,69 @@ const Profile = () => {
             </div>
           </section>
           <h1 className="text-xl font-bold mb-4">Riwayat</h1>
-          <Tabs defaultValue="pendaftaran" className="w-[400px]">
+          <Tabs defaultValue="pendaftaran" className="w-full">
             <TabsList>
               <TabsTrigger value="pendaftaran">Pendaftaran</TabsTrigger>
               <TabsTrigger value="rekammedis">Rekam Medis</TabsTrigger>
             </TabsList>
-            <TabsContent value="pendaftaran">
-              Make changes to your account here.
+            <TabsContent value="pendaftaran" className="flex flex-wrap gap-2">
+              {pendaftarans?.data.map((pendaftaran) => (
+                <Card
+                  key={pendaftaran.id}
+                  className="w-[240px] shadow transition duration-300 transform hover:translate-y-2 cursor-pointer"
+                >
+                  <CardContent className="p-4 flex flex-col gap-2">
+                    <Badge
+                      className="text-xs w-fit"
+                      variant={
+                        pendaftaran.status === "pending"
+                          ? "destructive"
+                          : "default"
+                      }
+                    >
+                      {pendaftaran.status}
+                    </Badge>
+                    <CardTitle className="text-sm">
+                      {pengguna?.data.nama}
+                    </CardTitle>
+                    <CardDescription className="text-xs">
+                      {pendaftaran.tanggal_pendaftaran}
+                    </CardDescription>
+                    <CardDescription className="text-xs">
+                      {pendaftaran.dokter.nama}
+                    </CardDescription>
+                    <CardDescription className="text-xs">
+                      {pendaftaran.ruang.nama}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
             </TabsContent>
-            <TabsContent value="rekammedis">
-              Change your password here.
+            <TabsContent value="rekammedis" className="flex flex-wrap gap-2">
+              {rekammediss?.data.map((rekammedis) => (
+                <Card
+                  key={rekammedis.id}
+                  className="w-[240px] shadow transition duration-300 transform hover:translate-y-2 cursor-pointer"
+                >
+                  <CardContent className="p-4 flex flex-col gap-2">
+                    <CardTitle className="text-sm">
+                      {pengguna?.data.nama}
+                    </CardTitle>
+                    <CardDescription className="text-xs">
+                      Keluhan: {rekammedis.keluhan}
+                    </CardDescription>
+                    <CardDescription className="text-xs">
+                      Diagnosa: {rekammedis.diagnosa}
+                    </CardDescription>
+                    <CardDescription className="text-xs">
+                      Tindakan: {rekammedis.tindakan}
+                    </CardDescription>
+                    <CardDescription className="text-xs">
+                      Keterangan: {rekammedis.keterangan}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
             </TabsContent>
           </Tabs>
         </>

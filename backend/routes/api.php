@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DokterController;
 use App\Http\Controllers\Api\PasienController;
 use App\Http\Controllers\Api\PendaftaranController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RekamMedisController;
 use App\Http\Controllers\Api\RuangController;
 use App\Http\Controllers\Api\UtilityController;
@@ -83,4 +84,8 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/countPendaftaran', [UtilityController::class, 'getCountPendaftaran']);
     Route::get('/countRekamMedis', [UtilityController::class, 'getCountRekamMedis']);
     Route::get('/recentPasien', [UtilityController::class, 'getRecentPasien']);
+
+    //Route for user profile
+    Route::get('/pendaftaranProfile/{id}', [ProfileController::class, 'pendaftaran']);
+    Route::get('/rekamMedisProfile/{id}', [ProfileController::class, 'rekammedis']);
 });
