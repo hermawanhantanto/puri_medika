@@ -42,6 +42,7 @@ export interface editPasienParams {
   nomor_telepon: string;
   alamat: string;
   token: string;
+  image: string;
 }
 
 export interface deletePasienParams {
@@ -65,6 +66,7 @@ export interface IDokter {
   alamat: string;
   jenis_kelamin: "L" | "P";
   no_telp: string;
+  gambar: string;
 }
 export interface GetAllDokterParams {
   token: string;
@@ -80,6 +82,7 @@ export interface CreateDokterParams {
   alamat: string;
   jenis_kelamin: "L" | "P";
   no_telp: string;
+  gambar: string;
 }
 export interface EditDokterParams {
   id: string;
@@ -90,6 +93,7 @@ export interface EditDokterParams {
   jenis_kelamin: "L" | "P";
   no_telp: string;
   token: string;
+  gambar: string;
 }
 export interface ShowDokterParams {
   id: string | undefined;
@@ -107,6 +111,7 @@ export interface IRuang {
   keterangan: string;
   kapasitas: number;
   status: "tersedia" | "tidak tersedia";
+  gambar: string;
 }
 export interface GetAllRuangParams {
   token: string;
@@ -120,6 +125,7 @@ export interface CreateRuangParams {
   keterangan: string;
   status: "tersedia" | "tidak tersedia";
   kapasitas: number;
+  gambar: string;
 }
 export interface EditRuangParams {
   id: string;
@@ -128,6 +134,7 @@ export interface EditRuangParams {
   kapasitas: number;
   status: "tersedia" | "tidak tersedia";
   token: string;
+  gambar: string;
 }
 export interface ShowRuangParams {
   id: string | undefined;

@@ -10,7 +10,7 @@ import { API_URL } from "./authAction";
 
 export async function getAllDokter(params: GetAllDokterParams) {
   try {
-    const { token, page = 1, orderBy, jenis_kelamin } = params;
+    const { token, page = "", orderBy = "", jenis_kelamin = "" } = params;
     const response = await axios.get(
       `${API_URL}/dokters?page=${page}&orderBy=${orderBy}&jenis_kelamin=${jenis_kelamin}`,
       {
@@ -37,6 +37,7 @@ export async function createDokter(params: CreateDokterParams) {
       no_telp,
       alamat,
       nomor_izin_praktek,
+      gambar,
     } = params;
     const response = await axios.post(
       `${API_URL}/dokters`,
@@ -47,6 +48,7 @@ export async function createDokter(params: CreateDokterParams) {
         no_telp,
         alamat,
         nomor_izin_praktek,
+        gambar,
       },
       {
         headers: {
@@ -97,6 +99,7 @@ export async function editDokter(params: EditDokterParams) {
       alamat,
       nomor_izin_praktek,
       token,
+      gambar,
     } = params;
     console.log(params);
 
@@ -109,6 +112,7 @@ export async function editDokter(params: EditDokterParams) {
         no_telp,
         alamat,
         nomor_izin_praktek,
+        gambar,
       },
       {
         headers: {

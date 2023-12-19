@@ -10,8 +10,7 @@ import { API_URL } from "./authAction";
 
 export async function getAllRuang(params: GetAllRuangParams) {
   try {
-    console.log(params);
-    const { token, page = 1, orderBy, status } = params;
+    const { token, page = "", orderBy = "", status = "" } = params;
     const response = await axios.get(
       `${API_URL}/ruangs?page=${page}&orderBy=${orderBy}&status=${status}`,
       {
@@ -30,7 +29,7 @@ export async function getAllRuang(params: GetAllRuangParams) {
 
 export async function createRuang(params: CreateRuangParams) {
   try {
-    const { token, nama, keterangan, kapasitas, status } = params;
+    const { token, nama, keterangan, kapasitas, status, gambar } = params;
     const response = await axios.post(
       `${API_URL}/ruangs`,
       {
@@ -38,6 +37,7 @@ export async function createRuang(params: CreateRuangParams) {
         keterangan,
         kapasitas,
         status,
+        gambar,
       },
       {
         headers: {
@@ -79,7 +79,7 @@ export async function showRuang(params: ShowDokterParams) {
 
 export async function editRuang(params: EditRuangParams) {
   try {
-    const { id, nama, keterangan, kapasitas, status, token } = params;
+    const { id, nama, keterangan, kapasitas, status, token, gambar } = params;
     console.log(params);
 
     const response = await axios.put(
@@ -89,6 +89,7 @@ export async function editRuang(params: EditRuangParams) {
         keterangan,
         kapasitas,
         status,
+        gambar,
       },
       {
         headers: {

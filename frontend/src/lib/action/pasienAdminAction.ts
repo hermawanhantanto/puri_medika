@@ -60,8 +60,8 @@ export async function editPasien(params: editPasienParams) {
       nomor_telepon,
       alamat,
       token,
+      image,
     } = params;
-    console.log(params);
     const tanggal = tanggal_lahir.toISOString().split("T")[0];
     const response = await axios.put(
       `${API_URL}/pasiens/${id}`,
@@ -74,6 +74,7 @@ export async function editPasien(params: editPasienParams) {
         tanggal_lahir: tanggal,
         nomor_telepon,
         alamat,
+        image,
       },
       {
         headers: {

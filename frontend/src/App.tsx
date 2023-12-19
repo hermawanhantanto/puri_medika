@@ -8,6 +8,8 @@ import PasienCreate from "./components/shared/PasienCreate";
 import PasienEdit from "./components/shared/PasienEdit";
 import PendaftaranCreate from "./components/shared/PendaftaranCreate";
 import PendaftaranEdit from "./components/shared/PendaftaranEdit";
+import RekamMedisCreate from "./components/shared/RekamMedisCreate";
+import RekamMedisEdit from "./components/shared/RekamMedisEdit";
 import RuangCreate from "./components/shared/RuangCreate";
 import RuangEdit from "./components/shared/RuangEdit";
 import { Toaster } from "./components/ui/toaster";
@@ -23,8 +25,9 @@ import RuangAdminPage from "./root/admin/pages/RuangAdminPage";
 import LayoutUser from "./root/user/LayoutUser";
 import Dashboard from "./root/user/pages/Dashboard";
 import PendaftaranPasien from "./root/user/pages/PendaftaranPasien";
-import RekamMedisCreate from "./components/shared/RekamMedisCreate";
-import RekamMedisEdit from "./components/shared/RekamMedisEdit";
+import DokterPage from "./root/user/pages/DokterPage";
+import RuangPage from "./root/user/pages/RuangPage";
+import Profile from "./root/user/pages/Profile";
 
 function App() {
   const { user } = useAuth();
@@ -122,12 +125,25 @@ function App() {
           />
         </Route>
         <Route element={<LayoutUser />}>
-          <Route path="/" element={isUser && <Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route
             path="/pendaftaran"
-            element={isUser ? <PendaftaranPasien /> : <Navigate to="login" />}
+            element={isUser ? <PendaftaranPasien /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/dokter"
+            element={isUser ? <DokterPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/ruang"
+            element={isUser ? <RuangPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile"
+            element={isUser ? <Profile /> : <Navigate to="/login" />}
           />
         </Route>
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
       <Toaster />
     </main>

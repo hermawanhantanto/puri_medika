@@ -6,14 +6,9 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  nama: z.string().min(3).max(50),
-  email: z.string().email(),
-  password: z.string().min(8).max(50),
   nomor_identitas: z.string().min(16).max(16),
   tanggal_lahir: z.date(),
   jenis_kelamin: z.enum(["L", "P"]),
-  nomor_telepon: z.string().min(10).max(13),
-  alamat: z.string().min(10).max(255),
 });
 
 export const dokterSchema = z.object({
@@ -46,4 +41,18 @@ export const rekamMedisSchema = z.object({
   diagnosa: z.string().min(5).max(255),
   tindakan: z.string().min(5).max(255),
   keterangan: z.string().min(10).max(255),
+});
+
+export const pendaftaranPasienSchema = z.object({
+  dokter_id: z.string(),
+  ruang_id: z.string(),
+  tanggal_pendaftaran: z.date(),
+});
+
+export const editProfileSchema = z.object({
+  nama: z.string().min(3).max(50),
+  email: z.string().email(),
+  password: z.string().min(8).max(50),
+  nomor_telepon: z.string().min(10).max(13),
+  alamat: z.string().min(10).max(255),
 });

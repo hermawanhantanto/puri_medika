@@ -15,5 +15,6 @@ class Dokter extends Model
         'alamat',
         'jenis_kelamin',
         'no_telp',
+        'gambar'
     ];
 }

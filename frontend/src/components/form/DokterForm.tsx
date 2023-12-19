@@ -1,27 +1,27 @@
 import Spinner from "@/components/shared/Spinner";
 import { Button } from "@/components/ui/button";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import {
-    useCreateDokterMutation,
-    useDeleteDokterMutation,
-    useEditDokterMutation
+  useCreateDokterMutation,
+  useDeleteDokterMutation,
+  useEditDokterMutation,
 } from "@/lib/react-query/queriesAndMutation";
 import { IDokter } from "@/types";
 import { dokterSchema } from "@/validation";
@@ -30,14 +30,22 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import "./Input.css";
+import { useRef, useState } from "react";
+import axios from "axios";
+import {
+  REACT_APP_CLOUDINARY_PRESET_KEY,
+  REACT_APP_CLOUDINARY_URL,
+} from "@/lib/cloudinary";
 
 interface Props {
   dokter?: IDokter;
 }
 
 const DokterForm = ({ dokter }: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const { mutateAsync: createDokter, isPending } = useCreateDokterMutation();
+  const gambarInput = useRef<HTMLInputElement>(null);
+  const { mutateAsync: createDokter } = useCreateDokterMutation();
   const { user } = useAuth();
   const { token } = user!;
   const navigate = useNavigate();
@@ -53,14 +61,25 @@ const DokterForm = ({ dokter }: Props) => {
     resolver: zodResolver(dokterSchema),
   });
 
-  const { mutateAsync: editDokter, isPending: isEditPending } =
-    useEditDokterMutation();
+  const { mutateAsync: editDokter } = useEditDokterMutation();
 
   const { mutateAsync: deleteDokter, isPending: isDeletePending } =
     useDeleteDokterMutation();
 
   async function onSubmit(values: z.infer<typeof dokterSchema>) {
     try {
+      setIsLoading(true);
+      const image = gambarInput.current?.files?.[0];
+      if (!image)
+        return toast({
+          variant: "destructive",
+          title: "Gambar tidak boleh kosong",
+        });
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("upload_preset", REACT_APP_CLOUDINARY_PRESET_KEY);
+      const response = await axios.post(REACT_APP_CLOUDINARY_URL, formData);
+      const data = await response.data.secure_url;
       const {
         nama,
         spesialis,
@@ -79,6 +98,7 @@ const DokterForm = ({ dokter }: Props) => {
           jenis_kelamin,
           no_telp,
           token,
+          gambar: data,
         });
 
         toast({
@@ -95,6 +115,7 @@ const DokterForm = ({ dokter }: Props) => {
         jenis_kelamin,
         no_telp,
         token,
+        gambar: data,
       });
       toast({
         title: "Success",
@@ -104,8 +125,10 @@ const DokterForm = ({ dokter }: Props) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Something went wrong",
+        title: `Something went wrong ${error}`,
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -235,6 +258,16 @@ const DokterForm = ({ dokter }: Props) => {
               )}
             />
           </div>
+          <div className="flex flex-col gap-2 mt-6">
+            <FormLabel>Gambar</FormLabel>
+            <Input
+              type="file"
+              placeholder="Masukkan gambar"
+              ref={gambarInput}
+              accept="image/*"
+            />
+          </div>
+
           <div className="flex items-center justify-end gap-4 mt-8">
             {dokter && (
               <Button
@@ -250,9 +283,9 @@ const DokterForm = ({ dokter }: Props) => {
             <Button
               type="submit"
               className="w-fit min-w-[120px]"
-              disabled={isPending}
+              disabled={isLoading}
             >
-              {isPending ? <Spinner /> : isEditPending ? <Spinner /> : "Submit"}
+              {isLoading ? <Spinner /> : "Submit"}
             </Button>
           </div>
         </form>

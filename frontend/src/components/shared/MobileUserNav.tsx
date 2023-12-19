@@ -18,11 +18,11 @@ const MobileUserNav = () => {
   const handleLogin = () => {
     window.location.href = "/login";
   };
-  
+
   return (
     <div>
       <Sheet>
-        <SheetTrigger>
+        <SheetTrigger asChild>
           <Button variant="ghost" className="lg:hidden">
             <GiHamburgerMenu style={{ fontSize: "1.4rem" }} />
           </Button>

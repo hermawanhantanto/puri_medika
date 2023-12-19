@@ -72,6 +72,14 @@ class PendaftaranController extends Controller
             ],400);
         }
 
+        $isUniquePending = Pendaftaran::where('user_id', $storeData['user_id'])->where('status', 'pending')->first();
+
+        if(!is_null($isUniquePending)){
+            return response()->json([
+                'message' => 'Selesaikan dulu pendaftaran sebelumnya!'
+            ],400);
+        }
+
         $pendaftaran = Pendaftaran::create($storeData);
 
         return response()->json([

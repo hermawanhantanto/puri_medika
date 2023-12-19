@@ -1,31 +1,37 @@
 import Spinner from "@/components/shared/Spinner";
 import { Button } from "@/components/ui/button";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import {
-    useCreateRuangMutation,
-    useDeleteRuangMutation,
-    useEditRuangMutation,
+  REACT_APP_CLOUDINARY_PRESET_KEY,
+  REACT_APP_CLOUDINARY_URL,
+} from "@/lib/cloudinary";
+import {
+  useCreateRuangMutation,
+  useDeleteRuangMutation,
+  useEditRuangMutation,
 } from "@/lib/react-query/queriesAndMutation";
 import { IRuang } from "@/types";
 import { ruangSchema } from "@/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -36,6 +42,7 @@ interface Props {
 }
 
 const RuangForm = ({ ruang }: Props) => {
+  const gambarInput = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { mutateAsync: createRuang, isPending } = useCreateRuangMutation();
   const { user } = useAuth();
@@ -59,6 +66,17 @@ const RuangForm = ({ ruang }: Props) => {
 
   async function onSubmit(values: z.infer<typeof ruangSchema>) {
     try {
+      const image = gambarInput.current?.files?.[0];
+      if (!image)
+        return toast({
+          variant: "destructive",
+          title: "Gambar tidak boleh kosong",
+        });
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("upload_preset", REACT_APP_CLOUDINARY_PRESET_KEY!);
+      const response = await axios.post(REACT_APP_CLOUDINARY_URL!, formData);
+      const data = await response.data.secure_url;
       const { nama, keterangan, status, kapasitas } = values;
       const jumlah = Number(kapasitas);
       if (ruang) {
@@ -69,6 +87,7 @@ const RuangForm = ({ ruang }: Props) => {
           status,
           kapasitas: jumlah,
           token,
+          gambar: data,
         });
 
         toast({
@@ -83,6 +102,7 @@ const RuangForm = ({ ruang }: Props) => {
         status,
         kapasitas: jumlah,
         token,
+        gambar: data,
       });
       toast({
         title: "Success",
@@ -192,6 +212,15 @@ const RuangForm = ({ ruang }: Props) => {
                   <FormMessage />
                 </FormItem>
               )}
+            />
+          </div>
+          <div className="flex flex-col gap-2 mt-6">
+            <FormLabel>Gambar</FormLabel>
+            <Input
+              type="file"
+              placeholder="Masukkan gambar"
+              ref={gambarInput}
+              accept="image/*"
             />
           </div>
           <div className="flex items-center justify-end gap-4 mt-8">

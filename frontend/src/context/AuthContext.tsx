@@ -6,6 +6,7 @@ import React, {
 } from "react";
 
 interface IUser {
+  id: number
   email: string;
   token: string;
   role: string;

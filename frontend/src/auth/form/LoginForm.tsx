@@ -45,6 +45,7 @@ const LoginForm = () => {
         });
 
       const userData = {
+        id: user.id,
         email: user.email,
         token: user.token,
         role: user.role,

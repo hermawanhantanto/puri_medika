@@ -14,5 +14,6 @@ class Ruang extends Model
         'keterangan',
         'status',
         'kapasitas',
+        'gambar'
     ];
 }
