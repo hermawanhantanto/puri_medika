@@ -90,8 +90,10 @@ export async function editPasien(params: editPasienParams) {
 
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 }
 

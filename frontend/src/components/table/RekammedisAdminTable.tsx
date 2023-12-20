@@ -59,7 +59,7 @@ const RekamMedisTable = () => {
           <Table className="min-w-full">
             <TableCaption>Rekam Medis</TableCaption>
             <TableHeader>
-              <TableRow>
+              <TableRow className="max-lg:hidden">
                 {tableHeaderRekamMedis.map((item) => {
                   return (
                     <TableHead key={item.key}>
@@ -83,12 +83,22 @@ const RekamMedisTable = () => {
                       {rekammedis.nama_pasien}
                     </Link>
                   </TableCell>
-                  <TableCell>{rekammedis.nomor_identitas}</TableCell>
-                  <TableCell>{rekammedis.keluhan}</TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {rekammedis.nomor_identitas}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {rekammedis.keluhan}
+                  </TableCell>
                   <TableCell>{rekammedis.diagnosa}</TableCell>
-                  <TableCell>{rekammedis.tindakan}</TableCell>
-                  <TableCell>{rekammedis.keterangan}</TableCell>
-                  <TableCell>{rekammedis.jenis_kelamin}</TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {rekammedis.tindakan}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {rekammedis.keterangan}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {rekammedis.jenis_kelamin}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

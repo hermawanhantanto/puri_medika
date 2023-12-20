@@ -60,7 +60,7 @@ const LoginForm = () => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Username atau password salah",
+        title: `${error}`,
         action: <ToastAction altText="Try again">Coba lagi</ToastAction>,
       });
     }

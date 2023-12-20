@@ -13,7 +13,8 @@ import { IRuang } from "@/types";
 
 const RuangPage = () => {
   const { user } = useAuth();
-  const { data: ruangs } = useGetAllRuang({ token: user!.token });
+  const token = JSON.parse(localStorage.getItem("user")!).token;
+  const { data: ruangs } = useGetAllRuang({ token });
   if (!user) return <Spinner />;
   return (
     <main className="flex w-full flex-col min-h-screen">

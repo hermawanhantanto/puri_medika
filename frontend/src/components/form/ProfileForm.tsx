@@ -102,7 +102,7 @@ const ProfileForm = ({
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Gagal mengubah profile",
+        title: `${error}`,
       });
     } finally {
       setIsLoading(false);

@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { useAuth } from "@/hooks/useAuth";
 import {
   useCreatePendaftaranMutation,
   useGetAllDokter,
@@ -40,7 +39,8 @@ import { z } from "zod";
 const PendaftaranPasien = () => {
   const { toast } = useToast();
 
-  const { user } = useAuth();
+  const token = JSON.parse(localStorage.getItem("user")!).token;
+  const id = JSON.parse(localStorage.getItem("user")!).id;
 
   const form = useForm<z.infer<typeof pendaftaranPasienSchema>>({
     resolver: zodResolver(pendaftaranPasienSchema),
@@ -52,11 +52,11 @@ const PendaftaranPasien = () => {
   });
 
   const { data: dokters } = useGetAllDokter({
-    token: user!.token,
+    token,
   });
 
   const { data: ruangs } = useGetAllRuang({
-    token: user!.token,
+    token,
   });
 
   const { mutateAsync: daftarPasien, isPending } =
@@ -64,14 +64,18 @@ const PendaftaranPasien = () => {
 
   async function onSubmit(values: z.infer<typeof pendaftaranPasienSchema>) {
     try {
+      if (!values.dokter_id || !values.ruang_id || !values.tanggal_pendaftaran)
+        return toast({ title: "Mohon isi semua form", variant: "destructive" });
+
       await daftarPasien({
-        user_id: user!.id,
+        user_id: id,
         dokter_id: Number(values.dokter_id),
         ruang_id: Number(values.ruang_id),
         tanggal_pendaftaran: values.tanggal_pendaftaran,
         status: "pending",
-        token: user!.token,
+        token,
       });
+
       toast({
         title: "Success mendaftar pasien!",
       });

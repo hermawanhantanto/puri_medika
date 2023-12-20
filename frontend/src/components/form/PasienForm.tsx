@@ -121,7 +121,7 @@ const PasienForm = ({ pasien }: Props) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Something went wrong",
+        title: `${error}`,
       });
     }
   }

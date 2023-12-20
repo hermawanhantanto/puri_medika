@@ -59,7 +59,7 @@ const DokterAdminTable = () => {
           <Table className="min-w-full">
             <TableCaption>Dokters</TableCaption>
             <TableHeader>
-              <TableRow>
+              <TableRow className="max-lg:hidden">
                 {tableHeaderDokter.map((item) => {
                   return (
                     <TableHead key={item.key}>
@@ -84,10 +84,18 @@ const DokterAdminTable = () => {
                     </Link>
                   </TableCell>
                   <TableCell>{dokter.spesialis}</TableCell>
-                  <TableCell>{dokter.nomor_izin_praktek}</TableCell>
-                  <TableCell>{dokter.alamat}</TableCell>
-                  <TableCell>{dokter.jenis_kelamin}</TableCell>
-                  <TableCell>{dokter.no_telp}</TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {dokter.nomor_izin_praktek}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {dokter.alamat}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {dokter.jenis_kelamin}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {dokter.no_telp}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

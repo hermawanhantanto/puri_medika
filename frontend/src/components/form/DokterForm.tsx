@@ -125,7 +125,7 @@ const DokterForm = ({ dokter }: Props) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: `Something went wrong ${error}`,
+        title: `${error}`,
       });
     } finally {
       setIsLoading(false);

@@ -62,8 +62,10 @@ export async function createDokter(params: CreateDokterParams) {
     }
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 }
 
@@ -128,8 +130,10 @@ export async function editDokter(params: EditDokterParams) {
 
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 }
 

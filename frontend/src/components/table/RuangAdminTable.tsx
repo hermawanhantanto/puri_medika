@@ -60,7 +60,7 @@ const RuangAdminTable = () => {
           <Table className="min-w-full">
             <TableCaption>Ruangs</TableCaption>
             <TableHeader>
-              <TableRow>
+              <TableRow className="max-sm:hidden">
                 {tableHeaderRuang.map((item) => {
                   return (
                     <TableHead key={item.key}>
@@ -84,7 +84,9 @@ const RuangAdminTable = () => {
                       {ruang.nama}
                     </Link>
                   </TableCell>
-                  <TableCell>{ruang.keterangan}</TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {ruang.keterangan}
+                  </TableCell>
                   <TableCell>
                     {ruang.status === "tersedia" ? (
                       <Badge>{ruang.status}</Badge>
@@ -92,7 +94,9 @@ const RuangAdminTable = () => {
                       <Badge variant="destructive">{ruang.status}</Badge>
                     )}
                   </TableCell>
-                  <TableCell>{ruang.kapasitas} Orang</TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {ruang.kapasitas} Orang
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

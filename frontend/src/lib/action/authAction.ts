@@ -12,8 +12,10 @@ export const signInAccount = async (user: loginParams) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 };
 
@@ -45,7 +47,9 @@ export const signUpAccount = async (user: registerParams) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 };

@@ -18,7 +18,11 @@ import {
 
 const DokterPage = () => {
   const { user } = useAuth();
-  const { data: dokters } = useGetAllDokter({ token: user!.token });
+
+  const token = JSON.parse(localStorage.getItem("user")!).token;
+
+  const { data: dokters } = useGetAllDokter({ token });
+
   if (!user) return <Spinner />;
   return (
     <main className="w-full min-h-screen">

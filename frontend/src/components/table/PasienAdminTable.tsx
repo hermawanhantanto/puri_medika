@@ -59,7 +59,7 @@ const PasienAdminTable = () => {
           <Table className="min-w-full">
             <TableCaption>Pasiens</TableCaption>
             <TableHeader>
-              <TableRow>
+              <TableRow className="max-lg:hidden">
                 {tableHeaderPasien.map((item) => {
                   return (
                     <TableHead key={item.key}>
@@ -84,11 +84,21 @@ const PasienAdminTable = () => {
                     </Link>
                   </TableCell>
                   <TableCell>{pasien.email}</TableCell>
-                  <TableCell>{pasien.nomor_identitas}</TableCell>
-                  <TableCell>{String(pasien.tanggal_lahir)}</TableCell>
-                  <TableCell>{pasien.alamat}</TableCell>
-                  <TableCell>{pasien.jenis_kelamin}</TableCell>
-                  <TableCell>{pasien.nomor_telepon}</TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {pasien.nomor_identitas}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden ">
+                    {String(pasien.tanggal_lahir)}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {pasien.alamat}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {pasien.jenis_kelamin}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {pasien.nomor_telepon}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

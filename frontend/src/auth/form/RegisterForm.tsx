@@ -90,7 +90,7 @@ const RegisterForm = () => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Something went wrong",
+        title: `${error}`,
       });
     }
   }

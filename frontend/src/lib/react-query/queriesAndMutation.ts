@@ -11,6 +11,7 @@ import {
   EditPendaftaranParams,
   EditRekamMedisParams,
   EditRuangParams,
+  GetAllDokterParams,
   GetAllPasienParams,
   GetAllPendaftaranParams,
   GetAllRekamMedisParams,
@@ -131,7 +132,7 @@ export const useDeletePasienMutation = () => {
   });
 };
 
-export const useGetAllDokter = (params: GetAllPasienParams) => {
+export const useGetAllDokter = (params: GetAllDokterParams) => {
   return useQuery({
     queryKey: ["getAllDokter"],
     queryFn: () => getAllDokter(params),

@@ -33,7 +33,7 @@ function App() {
   const { user } = useAuth();
 
   const isAdmin = user?.role === "ADMIN";
-  const isUser = user?.role === "USER";
+  const isUser = JSON.parse(localStorage.getItem("user")!) || null;
 
   const isLogin = () => {
     if (!user) return <LoginForm />;

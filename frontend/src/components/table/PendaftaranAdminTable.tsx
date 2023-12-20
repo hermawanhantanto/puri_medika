@@ -1,8 +1,6 @@
 import { tableHeaderPendaftaran } from "@/constant";
 import { useAuth } from "@/hooks/useAuth";
-import {
-    useGetAllPendaftaran
-} from "@/lib/react-query/queriesAndMutation";
+import { useGetAllPendaftaran } from "@/lib/react-query/queriesAndMutation";
 import { IPendaftaran } from "@/types";
 import { useEffect } from "react";
 import { FaArrowUp } from "react-icons/fa6";
@@ -12,13 +10,13 @@ import Pagination from "../shared/Pagination";
 import SkeletonTable from "../shared/SkeletonTable";
 import { Badge } from "../ui/badge";
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "../ui/table";
 
 const PendaftaranAdminTable = () => {
@@ -62,7 +60,7 @@ const PendaftaranAdminTable = () => {
           <Table className="min-w-full">
             <TableCaption>Pendaftaran</TableCaption>
             <TableHeader>
-              <TableRow>
+              <TableRow className="max-lg:hidden">
                 {tableHeaderPendaftaran.map((item) => {
                   return (
                     <TableHead key={item.key}>
@@ -87,16 +85,20 @@ const PendaftaranAdminTable = () => {
                     </Link>
                   </TableCell>
                   <TableCell>{pendaftaran.nama_dokter}</TableCell>
-                  <TableCell>{pendaftaran.nama_ruang}</TableCell>
-                  <TableCell>{pendaftaran.nomor_identitas}</TableCell>
-                  <TableCell>
+                  <TableCell className="max-sm:hidden">
+                    {pendaftaran.nama_ruang}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden max-lg:hidden">
+                    {pendaftaran.nomor_identitas}
+                  </TableCell>
+                  <TableCell className="max-sm:hidden">
                     {pendaftaran.status === "selesai" ? (
                       <Badge variant="default">{pendaftaran.status}</Badge>
                     ) : (
                       <Badge variant="destructive">{pendaftaran.status}</Badge>
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="max-sm:hidden">
                     {String(pendaftaran.tanggal_pendaftaran)}
                   </TableCell>
                 </TableRow>

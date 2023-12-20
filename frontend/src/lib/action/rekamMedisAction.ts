@@ -56,8 +56,10 @@ export async function createRekamMedis(params: CreateRekamMedisParams) {
     }
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 }
 
@@ -117,8 +119,10 @@ export async function editRekamMedis(params: EditRekamMedisParams) {
 
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 }
 

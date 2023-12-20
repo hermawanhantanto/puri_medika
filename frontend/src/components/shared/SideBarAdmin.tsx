@@ -14,7 +14,7 @@ const SideBarAdmin = () => {
   };
 
   return (
-    <section className="flex flex-col p-12 bg-blue-600 min-h-screen overflow-y-auto min-w-[340px] max-lg:hidden">
+    <section className="flex flex-col p-12 bg-blue-600 min-h-screen overflow-y-auto min-w-[340px] max-lg:hidden ">
       <img
         src="/assets/images/puri_medika.png"
         alt="logo"

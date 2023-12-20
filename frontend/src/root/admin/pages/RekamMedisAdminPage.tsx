@@ -27,7 +27,7 @@ const RekamMedisAdminPage = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <div className="items-center flex justify-between mb-8">
+      <div className="sm:items-center flex justify-between mb-8 max-sm:flex-col">
         <Select onValueChange={(values) => handleChange(values)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Jenis Kelamin" />
@@ -40,7 +40,7 @@ const RekamMedisAdminPage = () => {
         </Select>
         <Link
           to="/admin/rekammedis/create"
-          className="self-end py-2 px-4 bg-blue-500 text-white rounded"
+          className="sm:self-end py-2 px-4 bg-blue-500 text-white rounded w-fit max-sm:mt-4"
         >
           Tambah Rekam Medis
         </Link>

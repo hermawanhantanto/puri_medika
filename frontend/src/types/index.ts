@@ -42,7 +42,7 @@ export interface editPasienParams {
   nomor_telepon: string;
   alamat: string;
   token: string;
-  image: string;
+  image?: string;
 }
 
 export interface deletePasienParams {
@@ -51,7 +51,7 @@ export interface deletePasienParams {
 }
 
 export interface GetAllPasienParams {
-  token: string;
+  token: string | undefined;
   page?: string;
   jenis_kelamin?: string;
   orderBy?: string;
@@ -69,7 +69,7 @@ export interface IDokter {
   gambar: string;
 }
 export interface GetAllDokterParams {
-  token: string;
+  token: string | undefined;
   page?: string;
   jenis_kelamin?: string;
   orderBy?: string;
@@ -114,7 +114,7 @@ export interface IRuang {
   gambar: string;
 }
 export interface GetAllRuangParams {
-  token: string;
+  token: string | undefined;
   page?: string;
   orderBy?: string;
   status?: string;

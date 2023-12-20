@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         if($validate->fails()){
             return response()->json([
-                'message' => 'Register Failed!',
+                'message' => 'Please check again your data input! Email Or Nomor Identitas must unique!',
                 'error' => $validate->errors()
             ],400);
         }

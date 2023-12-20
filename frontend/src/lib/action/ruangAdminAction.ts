@@ -51,8 +51,10 @@ export async function createRuang(params: CreateRuangParams) {
     }
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 }
 
@@ -105,8 +107,10 @@ export async function editRuang(params: EditRuangParams) {
 
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const { response } = error as object as {
+      response: { data: { message: string } };
+    };
+    throw response.data.message;
   }
 }
 

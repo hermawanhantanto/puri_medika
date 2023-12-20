@@ -1,5 +1,6 @@
 import ProfileForm from "@/components/form/ProfileForm";
 import Spinner from "@/components/shared/Spinner";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -7,44 +8,62 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth } from "@/hooks/useAuth";
 import {
   useGetAllPendaftaranByUser,
   useGetAllRekamMedisByUser,
   useShowPasien,
 } from "@/lib/react-query/queriesAndMutation";
-import { Badge } from "@/components/ui/badge";
+
+interface IPendaftaran {
+  id: number;
+  tanggal_pendaftaran: string;
+  status: string;
+  dokter: {
+    nama: string;
+  };
+  ruang: {
+    nama: string;
+  };
+}
+
+interface IRekamMedis {
+  id: number;
+  keluhan: string;
+  diagnosa: string;
+  tindakan: string;
+  keterangan: string;
+}
 
 const Profile = () => {
-  const { user } = useAuth();
+  const token = JSON.parse(localStorage.getItem("user")!).token;
+  const id = JSON.parse(localStorage.getItem("user")!).id;
 
   const {
     data: pengguna,
     isFetching,
     refetch,
   } = useShowPasien({
-    token: user!.token,
-    id: String(user!.id),
+    id: String(id),
+    token,
   });
 
   const { data: pendaftarans } = useGetAllPendaftaranByUser({
-    token: user!.token,
-    id: String(user!.id),
+    id: String(id),
+    token,
   });
 
   const { data: rekammediss } = useGetAllRekamMedisByUser({
-    token: user!.token,
-    id: String(user!.id),
+    id: String(id),
+    token,
   });
 
-  console.log("ini", rekammediss);
   return (
-    <main className="flex max-w-[1440px] mx-auto min-h-screen flex-col">
+    <main className="flex sm:max-w-[1440px] mx-auto min-h-screen flex-col max-sm:px-5 max-sm:w-full">
       {isFetching ? (
         <Spinner />
       ) : (
         <>
-          <section className="flex w-full gap-4 my-12 ">
+          <section className="flex w-full gap-4 sm:my-12 max-sm:flex-col ">
             <img
               src={
                 pengguna.data.image
@@ -52,10 +71,10 @@ const Profile = () => {
                   : "https://github.com/shadcn.png"
               }
               alt="profile"
-              className="h-32 w-32 rounded-full object-cover"
+              className="h-32 w-32 rounded-full object-cover "
             />
 
-            <div className="flex justify-between gap-12">
+            <div className="flex sm:justify-between sm:gap-12 max-sm:flex-col max-sm:mb-4">
               <div className="flex flex-col flex-1">
                 <h1 className="text-xl font-bold">{pengguna?.data.nama}</h1>
                 <p className="text-slate-500 text-sm">{pengguna?.data.email}</p>
@@ -64,8 +83,8 @@ const Profile = () => {
                 </p>
               </div>
               <ProfileForm
-                id={String(user!.id)}
-                token={user!.token}
+                id={String(id)}
+                token={token}
                 nama={pengguna?.data.nama}
                 email={pengguna?.data.email}
                 nomor_telepon={pengguna?.data.nomor_telepon}
@@ -84,7 +103,7 @@ const Profile = () => {
               <TabsTrigger value="rekammedis">Rekam Medis</TabsTrigger>
             </TabsList>
             <TabsContent value="pendaftaran" className="flex flex-wrap gap-2">
-              {pendaftarans?.data.map((pendaftaran) => (
+              {pendaftarans?.data.map((pendaftaran: IPendaftaran) => (
                 <Card
                   key={pendaftaran.id}
                   className="w-[240px] shadow transition duration-300 transform hover:translate-y-2 cursor-pointer"
@@ -117,7 +136,7 @@ const Profile = () => {
               ))}
             </TabsContent>
             <TabsContent value="rekammedis" className="flex flex-wrap gap-2">
-              {rekammediss?.data.map((rekammedis) => (
+              {rekammediss?.data.map((rekammedis: IRekamMedis) => (
                 <Card
                   key={rekammedis.id}
                   className="w-[240px] shadow transition duration-300 transform hover:translate-y-2 cursor-pointer"
