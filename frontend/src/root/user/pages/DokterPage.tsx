@@ -21,12 +21,16 @@ const DokterPage = () => {
 
   const token = JSON.parse(localStorage.getItem("user")!).token;
 
-  const { data: dokters } = useGetAllDokter({ token });
+  const { data: dokters, isFetching } = useGetAllDokter({ token });
 
   if (!user) return <Spinner />;
   return (
     <main className="w-full min-h-screen">
-      <section className="lg:flex lg:justify-between bg-slate-300 sm:min-h-[550px]">
+      <section
+        className="lg:flex lg:justify-between bg-slate-300 sm:min-h-[550px]"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <div className="flex flex-col text-blue-800 font-bold sm:text-3xl text-sm self-center xl:ml-36 lg:ml-12 lg:mb-12 max-lg:text-center max-lg:pt-12">
           <h1>Temui Tim Dokter Ahli Kami</h1>
           <h1 className="my-4">Segera Jadwalkan Konsultasi Anda Hari Ini</h1>
@@ -44,51 +48,57 @@ const DokterPage = () => {
         </div>
       </section>
       <section className="mt-12">
-        <h1 className="text-center sm:text-3xl font-bold text-xl">
-          Tim Dokter dan <span className="text-[#50D890]">Ahli Kami</span>
-        </h1>
-        <Swiper
-          effect={"coverflow"}
-          grabCursor={true}
-          centeredSlides={true}
-          loop={true}
-          slidesPerView={"auto"}
-          speed={600}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 100,
-            modifier: 2,
-            slideShadows: true,
-          }}
-          pagination={{ el: ".swiper-pagination", clickable: true }}
-          navigation={{
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          }}
-          modules={[EffectCoverflow, Pagination, Navigation]}
-          className="swiper_container mt-12"
-        >
-          {dokters?.data.data.map((dokter: IDokter) => (
-            <SwiperSlide key={dokter.id}>
-              <Card>
-                <CardContent className="p-5">
-                  <img
-                    src={dokter.gambar}
-                    alt={dokter.nama}
-                    className="object-cover shadow"
-                  />
-                  <CardTitle className="lg:text-3xl mt-2 text-xl">
-                    {dokter.nama}
-                  </CardTitle>
-                  <CardDescription className="lg:text-xl text-sm">
-                    {dokter.spesialis}
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {isFetching ? (
+          <Spinner />
+        ) : (
+          <>
+            <h1 className="text-center sm:text-3xl font-bold text-xl">
+              Tim Dokter dan <span className="text-[#50D890]">Ahli Kami</span>
+            </h1>
+            <Swiper
+              effect={"coverflow"}
+              grabCursor={true}
+              centeredSlides={true}
+              loop={true}
+              slidesPerView={"auto"}
+              speed={600}
+              coverflowEffect={{
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2,
+                slideShadows: true,
+              }}
+              pagination={{ el: ".swiper-pagination", clickable: true }}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
+              modules={[EffectCoverflow, Pagination, Navigation]}
+              className="swiper_container mt-12"
+            >
+              {dokters?.data.data.map((dokter: IDokter) => (
+                <SwiperSlide key={dokter.id}>
+                  <Card>
+                    <CardContent className="p-5">
+                      <img
+                        src={dokter.gambar}
+                        alt={dokter.nama}
+                        className="object-cover shadow"
+                      />
+                      <CardTitle className="lg:text-3xl mt-2 text-xl">
+                        {dokter.nama}
+                      </CardTitle>
+                      <CardDescription className="lg:text-xl text-sm">
+                        {dokter.spesialis}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </>
+        )}
       </section>
     </main>
   );

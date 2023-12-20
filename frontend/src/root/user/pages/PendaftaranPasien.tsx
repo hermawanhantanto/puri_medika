@@ -89,7 +89,11 @@ const PendaftaranPasien = () => {
 
   return (
     <main className="flex w-full flex-col min-h-screen">
-      <section className="flex flex-col xl:p-36 lg:p-24 gap-2 sm:bg-[url('assets/images/hero-pendaftaran.png')] bg-cover bg-no-repeat xl:min-h-[550px] bg-center sm:py-24 sm:px-12 p-5">
+      <section
+        className="flex flex-col xl:p-36 lg:p-24 gap-2 sm:bg-[url('assets/images/hero-pendaftaran.png')] bg-cover bg-no-repeat xl:min-h-[550px] bg-center sm:py-24 sm:px-12 p-5"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <h1 className="xl:text-3xl lg:text-xl text-xs text-blue-600 font-bold ">
           Selamat Datang di Puri Medika
         </h1>
@@ -98,7 +102,11 @@ const PendaftaranPasien = () => {
           perawatan medis terbaik
         </p>
       </section>
-      <section className="flex justify-between bg-blue-200">
+      <section
+        className="flex justify-between bg-blue-200"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <div className="bg-white rounded p-12 flex flex-col flex-wrap lg:w-1/2 w-full lg:m-36 shadow">
           <h1 className="sm:text-xl text-lg text-slate-600 font-semibold text-center mb-4">
             Pendaftaran Pasien

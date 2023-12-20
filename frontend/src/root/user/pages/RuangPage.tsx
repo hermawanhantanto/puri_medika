@@ -1,4 +1,3 @@
-import Spinner from "@/components/shared/Spinner";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -7,18 +6,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useAuth } from "@/hooks/useAuth";
 import { useGetAllRuang } from "@/lib/react-query/queriesAndMutation";
 import { IRuang } from "@/types";
 
 const RuangPage = () => {
-  const { user } = useAuth();
   const token = JSON.parse(localStorage.getItem("user")!).token;
   const { data: ruangs } = useGetAllRuang({ token });
-  if (!user) return <Spinner />;
   return (
     <main className="flex w-full flex-col min-h-screen">
-      <section className="flex flex-col xl:p-36 lg:p-24 gap-2 max-sm:min-h-[300px] bg-[url('assets/images/ruang1.jpg')] bg-cover bg-no-repeat xl:min-h-[550px] bg-center sm:py-24 sm:px-12 p-5 object-cover">
+      <section
+        className="flex flex-col xl:p-36 lg:p-24 gap-2 max-sm:min-h-[300px] bg-[url('assets/images/ruang1.jpg')] bg-cover bg-no-repeat xl:min-h-[550px] bg-center sm:py-24 sm:px-12 p-5 object-cover"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <h1 className="xl:text-3xl lg:text-xl text-xs text-blue-600 font-bold max-sm:hidden">
           Ruang Perawatan
         </h1>
@@ -26,7 +26,11 @@ const RuangPage = () => {
           Puri medika selalu memastikan ruang perawatan yang nyaman dan bersih
         </p>
       </section>
-      <section className="sm:mt-12 p-12">
+      <section
+        className="sm:mt-12 p-12"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <h1 className="text-center sm:text-3xl font-bold text-xl">
           Ruang <span className="text-[#50D890]">Perawatan</span>
         </h1>

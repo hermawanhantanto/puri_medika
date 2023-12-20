@@ -1,17 +1,54 @@
+import { useEffect, useState } from "react";
+
 const Dashboard = () => {
+  const [text, setText] = useState("");
+  const [delta, setDelta] = useState(Math.floor(Math.random() * 300));
+  const [isDeleting, setIsDeleting] = useState(false);
+  const periode = 2000;
+
+  useEffect(() => {
+    const ticker = setInterval(() => {
+      tick();
+    }, delta);
+    return () => clearInterval(ticker);
+  }, [delta, text]);
+
+  const tick = () => {
+    const fullText = "Yang berarti akan segera kembali";
+    const updateText = isDeleting
+      ? text.substring(0, text.length - 1)
+      : fullText.substring(0, text.length + 1);
+    setText(updateText);
+
+    if (isDeleting) {
+      setDelta((prev) => prev / 2);
+    }
+
+    if (!isDeleting && updateText === fullText) {
+      setIsDeleting(true);
+      setDelta(periode);
+    }
+
+    if (isDeleting && updateText === "") {
+      setIsDeleting(false);
+      setDelta(100);
+    }
+  };
+
   return (
     <main className="gap-12 flex flex-col w-full">
-      <section className="max-w-[1440px] mx-auto relative flex flex-col lg:pt-24 pt-12 max-lg:px-4 ">
+      <section
+        className="max-w-[1440px] mx-auto relative flex flex-col lg:pt-24 pt-12 max-lg:px-4 "
+        data-aos="zoom-in"
+        data-aos-duration="2000"
+      >
         <div className="flex max-lg:flex-col justify-between">
           <div className="flex flex-col max-lg:items-center">
             <div className="bg-[#50D890] flex items-center justify-center px-4 py-2 md:6 md:3 rounded-lg text-white text-sm md:text-lg  w-fit">
               <p className="text-sm">Selamat datang di Puri Medika</p>
             </div>
-            <h1 className="lg:mt-4 mt-4 font-bold text-[24px] lg:text-[48px] text-[#272727]">
-              Yang berarti
-            </h1>
-            <h1 className="font-bold text-[24px] lg:text-[48px] text-[#272727] max-lg:mb-4">
-              akan segera kembali
+            <h1 className="lg:mt-4 mt-4 font-bold text-[24px] lg:text-[48px] text-[#272727] max-w-[400px]">
+              <span className=" border-r-blue-500 border-r-4"> {text}</span>
             </h1>
           </div>
           <img src="assets/images/hero-image1.png" alt="hero-1" />
@@ -29,7 +66,11 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section className="max-w-[1440px] mx-auto">
+      <section
+        className="max-w-[1440px] mx-auto"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <div className="flex flex-col bg-[#EDF5FA] lg:rounded-[100px] p-12">
           <h2 className="lg:text-3xl text-lg text-center text-black font-bold">
             Pelayanan <span className="text-[#50D890]">Unggulan</span>
@@ -54,7 +95,11 @@ const Dashboard = () => {
                 alt="service-icons1"
               />
             </div>
-            <div className="flex flex-col justify-center items-center">
+            <div
+              className="flex flex-col justify-center items-center"
+              data-aos="zoom-in-up"
+              data-aos-duration="2000"
+            >
               <p className="text-xl font-bold mb-4">Poli Gigi</p>
               <img
                 src="assets/images/service-2.png"
@@ -67,7 +112,11 @@ const Dashboard = () => {
                 alt="service-icons2"
               />
             </div>
-            <div className="flex flex-col justify-center items-center">
+            <div
+              className="flex flex-col justify-center items-center"
+              data-aos="zoom-in-up"
+              data-aos-duration="3000"
+            >
               <p className="text-xl font-bold mb-4">Poli Mata</p>
 
               <img
@@ -125,12 +174,21 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-            <img src="assets/images/about.png" alt="about" />
+            <img
+              src="assets/images/about.png"
+              alt="about"
+              data-aos="zoom-in-up"
+              data-aos-duration="2000"
+            />
           </div>
         </div>
       </section>
 
-      <section className="flex lg:justify-between items-center bg-[#2F5B79] lg:px-[80px] mt-12 py-[60px] max-lg:flex-col px-4">
+      <section
+        className="flex lg:justify-between items-center bg-[#2F5B79] lg:px-[80px] mt-12 py-[60px] max-lg:flex-col px-4"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <div className=" flex flex-col max-lg:mb-8">
           <h2 className="sm:text-[39px] text-[24px] font-bold text-white max-lg:text-center">
             Kami akan selalu siap
@@ -175,7 +233,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section>
+      <section data-aos="zoom-in-up" data-aos-duration="3000">
         <div className="flex flex-col mx-auto max-w-[1440px]">
           <h2 className="sm:text-3xl text-xl text-center text-black font-bold mt-[11px]">
             Apa yang dikatakan <span className="text-[#50D890]">Pasien ?</span>
@@ -221,7 +279,11 @@ const Dashboard = () => {
         />
       </section>
 
-      <section className="flex flex-col mb-12 mx-auto max-w-[1440px] max-lg:p-5">
+      <section
+        className="flex flex-col mb-12 mx-auto max-w-[1440px] max-lg:p-5"
+        data-aos="zoom-in-up"
+        data-aos-duration="3000"
+      >
         <h2 className="sm:text-3xl text-xl text-center text-black font-bold mt-[11px]">
           Lokasi
         </h2>

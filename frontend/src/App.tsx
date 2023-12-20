@@ -28,6 +28,9 @@ import PendaftaranPasien from "./root/user/pages/PendaftaranPasien";
 import DokterPage from "./root/user/pages/DokterPage";
 import RuangPage from "./root/user/pages/RuangPage";
 import Profile from "./root/user/pages/Profile";
+import AOS from "aos";
+import "aos/dist/aos.css"; 
+AOS.init();
 
 function App() {
   const { user } = useAuth();

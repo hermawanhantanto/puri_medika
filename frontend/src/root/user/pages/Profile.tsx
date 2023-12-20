@@ -63,7 +63,11 @@ const Profile = () => {
         <Spinner />
       ) : (
         <>
-          <section className="flex w-full gap-4 sm:my-12 max-sm:flex-col ">
+          <section
+            className="flex w-full gap-4 sm:my-12 max-sm:flex-col"
+            data-aos="zoom-in-up"
+            data-aos-duration="1000"
+          >
             <img
               src={
                 pengguna.data.image
@@ -96,8 +100,19 @@ const Profile = () => {
               />
             </div>
           </section>
-          <h1 className="text-xl font-bold mb-4">Riwayat</h1>
-          <Tabs defaultValue="pendaftaran" className="w-full">
+          <h1
+            className="text-xl font-bold mb-4"
+            data-aos="zoom-in-up"
+            data-aos-duration="1000"
+          >
+            Riwayat
+          </h1>
+          <Tabs
+            defaultValue="pendaftaran"
+            className="w-full"
+            data-aos="zoom-in-up"
+            data-aos-duration="1000"
+          >
             <TabsList>
               <TabsTrigger value="pendaftaran">Pendaftaran</TabsTrigger>
               <TabsTrigger value="rekammedis">Rekam Medis</TabsTrigger>
